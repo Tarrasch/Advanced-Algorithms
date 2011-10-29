@@ -8,6 +8,8 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{listings}
+\usepackage{amsthm}
+\usepackage{amsmath}
 
 \title{Advanced Algorithms - part 1}
 \author{Arash Rouhani (rarash@student.chalmers.se) - 901117-1213}
@@ -135,6 +137,58 @@ This is what we wanted to prove, so we are done.
 
 
 \section{Probability theory}
+To keep this reasonably dense, I answer one question for each paragraph.
+
+$P(A \wedge B) = P(A) * P(B)$ Does not always hold, as if $A=B$ then that would
+wrongly imply $P(A) = P(A)^2$. However, if $A$ and $B$ are
+independent, that is $P(A \wedge B)/P(B) = P(A)$, then we immedietly see
+that the stated equation holds in general. The definition of independent
+mathiliterally says $A$ and $B$ are independent iff
+"Ratio of $A \wedge B$ in $B$ is as big as the ratio of $A$ in $universe$".
+
+Thinking of a $A$ and $B$ as sets, we already know that 
+$|A \cup B| \leq |A| + |B|$. With the exact same reasoning
+$P(A \vee B) \leq P(A) + P(B)$ will hold in general.
+
+A random variable, often denoted $X$, is a variable that can be
+diffrent values according to some distribution.
+A RV is defined differently for discrete and continous case.
+Discrete $X$ is associated with the \emph{probability function} f
+such that $P(X = a) = f(a)$. When $X$ is contious we call f a
+\emph{density function} and it should then obey $f(a) = 0$ yet
+$P(a < X < b) = \int_a^b f(x)dx$.
+
+In the discrete case $E[X] = \sum_x f(x)x$, and as always the continous
+counterpart has an integral instead of a sum. If sampling $X$ alot,
+spawning $X_1, X_2, ...$ then $E[X]$ is the average of those values.
+
+Intuitively $Z = X + Y$ means that $Z$ is $z = x + y$ when
+$X$ is $x$ and $Y$ is $y$. Trying to give a definition, I end up 
+with "looping" over $X$.
+$f_Z(z) = \sum_x f_X(x)f_Y(z-x)$. This says that $P(Z=z)$ is
+$\sum P(X=x \wedge Y=y)$ for all $x$ and $y$ such that $z = x + y$.
+$Z = X * Y$ is fundamentally the same, then
+$f_Z(z) = \sum_x f_X(x)f_Y(z/x)$
+
+Yes for both 3.6 and 3.7. $ E[X+Y] = \sum_x \sum_y f_X(x)f_Y(y)(x+y) $
+Is "assumed" from the
+intuition I gave about $Z = X + Y$, and can also be derived from
+the definition I gave.
+I've attached proofs for both 3.6 and 3.7, the proofs are for
+the discrete case, but will likely be analogous in the continous case.
+
+\begin{align*}
+ E[X+Y] &= \sum_x \sum_y f_X(x)f_Y(y)(x+y) \\
+        &= \sum_x f_X(x) \sum_y f_Y(y)y + \sum_y f_Y(y) \sum_x f_X(x)x \\
+        &= E[Y]\sum_x f_X(x) + E[X]\sum_x f_X(x) \\
+        &= E[Y] + E[X]\\
+\\
+\\
+ E[X*Y] &= \sum_x \sum_y f_X(x)f_Y(y)(x*y) \\
+        &= \sum_x f_X(x)x \sum_y f_Y(y)y \\
+        &= E[Y]\sum_x f_X(x)x \\
+        &= E[Y] * E[X]
+\end{align*}
 
 
 \end{document}
