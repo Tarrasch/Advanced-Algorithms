@@ -38,11 +38,11 @@ Let $k$ be any machine, and machine $k$ totally worked for $T_k$ time.
 We just said $T_k \geq T - T_j$. From this follows:
 
 \[
- T_k \geq T - T_j \rightarrow \sum_{k} T_k = A \geq m(T-t_j) \geq m(T-L)
+ T_k \geq T - T_j \Rightarrow \sum_{k} T_k = A \geq m(T-t_j) \geq m(T-L)
 \]
 
 \[
- A \geq m(T-L) \rightarrow A/m + L \geq T
+ A \geq m(T-L) \Rightarrow A/m + L \geq T
 \]
 
 Now we have what we need in terms of upper bounds and lower bounds.
@@ -59,6 +59,80 @@ Lets use the inequalities to "solve for" $T/T^*$.
 We are done.
 
 \section{Packing Bins}
+
+First we will give a counter example to the greedy algorithm.
+After that we prove a approximation ratio for the greedy algorithm.
+
+\subsection{Counter Example}
+
+Setting $K = 10$ and having the input queue $5, 1, 5, 1, 5$, greedy gives
+3 bins, they will contain $[5, 1] [5,1] [5]$ in that order. However the optimal
+solution will require only 2 bins, they must contain $[5, 5] [1, 1, 1]$.
+
+\subsection{Proving approximation ratio}
+
+We denote the greedy and optimal answer as $B$ and $B^*$ respectively.
+Our goal is to prove that $\lim_{n \to \infty} B/B^* \leq 2$. As before we
+start studying the problems lower bounds and the algorithms upper bounds.
+
+A lower bound comes from the observation that in and ideal setting you would
+let each bin be full, that is each bin holds $K$.
+
+\[
+ B^* * K \geq \sum w_i \Rightarrow B^* \geq \frac{\sum w_i}{K}
+\]
+
+Before venturing after upper bounds for the greedy algorithm, we define some
+notation.
+Let ${b_i}$ be bucket $i$ and ${b_i}_j$ be item $j$ in ${b_i}$.
+Let $w({b_i})$ be the sum of weights in ${b_i}$.
+Let $w_2({b_i}) = \frac{w({b_i}) + w(b_{i+1})}{2}$.
+
+A relation we state for $w()$ and $w_i()$ is that when $n \to \infty$ (then
+also $B \to \infty$)
+\[
+ \sum_{i=1}^{B} w_2({b_i}) = \sum_{i=1}^{B} w({b_i})
+\]
+
+Another relation between item weights $w_i$ and binsums $w()$ that always holds
+is
+
+\[
+ \sum_{i=1}^{n} w_i = \sum_{i=1}^{B} w({b_i})
+\]
+
+Above formula is common sense as all items must be in the bins exactly once.
+
+For a given bin ${b_i}$ that has a succesor $b_{i+1}$, I claim that
+$w({b_i}) + {b_{i+1}}_1 \geq K$. This must hold by proof of contradiction.
+The greedy algorithm will keep putting items in a bin if it has capacity for it.
+Bin $i$ could have
+held another item if $w({b_i}) + {b_{i+1}}_1 \leq K$. That contradicts the greedy
+algorithm behavior.
+
+Obvioulsy we have ${b_{i+1}}_1 \leq w(b_{i+1})$, this gives
+
+\[
+ 2w_2({b_i}) = w({b_i}) + w(b_{i+1}) \geq w({b_i}) + {b_{i+1}}_1 \geq K
+ \Rightarrow w_2({b_i}) \geq K/2
+\]
+
+We can finally conclude a upper bound that holds when $n \to \infty$.
+
+\[
+ \sum_{i=1}^{n} w_i = \sum_{i=1}^{B} w({b_i}) = \sum_{i=1}^{B} w_2({b_i}) \geq B*K/2
+\]
+
+Now lets use our inequalities, keeping in mind that the UB requires the
+constraint $n \to \infty$.
+
+\[
+ 2B^* \geq 2 \frac{\sum w_i}{K} \geq 2 \frac{B*K/2}{K} = B
+\]
+
+Hence $2B^* \geq B \Rightarrow B/B^* \leq 2 $ when $n \to \infty$.
+This is what we wanted to prove, so we are done.
+
 
 \section{Probability theory}
 
