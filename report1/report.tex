@@ -18,6 +18,45 @@
 \maketitle
 
 \section{Load balancing revisited}
+The approximation ratio that we want to determine is $T/T^*$.
+
+First we state the \emph{problems} lower bounds (without motivation, as they
+are considered known).
+
+$$ T^* \geq L $$
+$$ T^* \geq A/m $$
+
+Now lets consider the \emph{algorithms} upper bounds. We define $i$ and $j$
+as in class: Machine $i$, $m_i$, is the machine that worked until end.
+job $j$ is the last job by $m_i$, it took $t_j$ time. 
+
+We know (again from class) that all machines worked for at least $T - t_j$.
+As otherwise job $j$ would have been assigned to a different machine,
+this can be stated because of "greedy".
+
+Let $k$ be any machine, and machine $k$ totally worked for $T_k$ time.
+We just said $T_k \geq T - T_j$. From this follows:
+
+\[
+ T_k \geq T - T_j \rightarrow \sum_{k} T_k = A \geq m(T-t_j) \geq m(T-L)
+\]
+
+\[
+ A \geq m(T-L) \rightarrow A/m + L \geq T
+\]
+
+Now we have what we need in terms of upper bounds and lower bounds.
+Lets use the inequalities to "solve for" $T/T^*$.
+
+\[
+ T/T^* \leq \frac{A/m + L}{A/m} = 1 + mL/A
+\]
+
+\[
+  \lim_{L/A \to 0} T/T^* \leq 1 + mL/A = 1
+\]
+
+We are done.
 
 \section{Packing Bins}
 
