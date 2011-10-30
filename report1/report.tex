@@ -37,10 +37,10 @@ As otherwise job $j$ would have been assigned to a different machine,
 this can be stated because of "greedy".
 
 Let $k$ be any machine, and machine $k$ totally worked for $T_k$ time.
-We just said $T_k \geq T - T_j$. From this follows:
+We just said $T_k \geq T - t_j$. Using this and $\forall j. L \geq t_j$ gives
 
 \[
- T_k \geq T - T_j \Rightarrow \sum_{k} T_k = A \geq m(T-t_j) \geq m(T-L)
+ T_k \geq T - t_j \Rightarrow \sum_{k} T_k = A \geq m(T-t_j) \geq m(T-L)
 \]
 
 \[
@@ -75,9 +75,9 @@ solution will require only 2 bins, they must contain $[5, 5] [1, 1, 1]$.
 
 We denote the greedy and optimal answer as $B$ and $B^*$ respectively.
 Our goal is to prove that $\lim_{n \to \infty} B/B^* \leq 2$. As before we
-start studying the problems lower bounds and the algorithms upper bounds.
+start studying the problems lower bounds and then the algorithms upper bounds.
 
-A lower bound comes from the observation that in and ideal setting you would
+A lower bound comes from the observation that in an ideal setting you would
 let each bin be full, that is each bin holds $K$.
 
 \[
@@ -90,13 +90,13 @@ Let ${b_i}$ be bucket $i$ and ${b_i}_j$ be item $j$ in ${b_i}$.
 Let $w({b_i})$ be the sum of weights in ${b_i}$.
 Let $w_2({b_i}) = \frac{w({b_i}) + w(b_{i+1})}{2}$.
 
-A relation we state for $w()$ and $w_i()$ is that when $n \to \infty$ (then
+A relation we state for $w()$ and $w_2()$ is that when $n \to \infty$ (then
 also $B \to \infty$)
 \[
  \sum_{i=1}^{B} w_2({b_i}) = \sum_{i=1}^{B} w({b_i})
 \]
 
-Another relation between item weights $w_i$ and binsums $w()$ that always holds
+Another relation between item weights $w_i$ and bin sums $w()$ that always holds
 is
 
 \[
@@ -105,14 +105,14 @@ is
 
 Above formula is common sense as all items must be in the bins exactly once.
 
-For a given bin ${b_i}$ that has a succesor $b_{i+1}$, I claim that
+For a given bin ${b_i}$ that has a successor $b_{i+1}$, I claim that
 $w({b_i}) + {b_{i+1}}_1 \geq K$. This must hold by proof of contradiction.
 The greedy algorithm will keep putting items in a bin if it has capacity for it.
 Bin $i$ could have
 held another item if $w({b_i}) + {b_{i+1}}_1 \leq K$. That contradicts the greedy
 algorithm behavior.
 
-Obvioulsy we have ${b_{i+1}}_1 \leq w(b_{i+1})$, this gives
+Obviously we have ${b_{i+1}}_1 \leq w(b_{i+1})$, this gives
 
 \[
  2w_2({b_i}) = w({b_i}) + w(b_{i+1}) \geq w({b_i}) + {b_{i+1}}_1 \geq K
@@ -141,9 +141,9 @@ To keep this reasonably dense, I answer one question for each paragraph.
 
 $P(A \wedge B) = P(A) * P(B)$ Does not always hold, as if $A=B$ then that would
 wrongly imply $P(A) = P(A)^2$. However, if $A$ and $B$ are
-independent, that is $P(A \wedge B)/P(B) = P(A)$, then we immedietly see
-that the stated equation holds in general. The definition of independent
-mathiliterally says $A$ and $B$ are independent iff
+independent, that is $P(A \wedge B)/P(B) = P(A)$, then we immediately see
+that the stated equation holds in general. The definition can be interpreted
+as $A$ and $B$ are independent iff
 "Ratio of $A \wedge B$ in $B$ is as big as the ratio of $A$ in $universe$".
 
 Thinking of a $A$ and $B$ as sets, we already know that 
@@ -151,15 +151,15 @@ $|A \cup B| \leq |A| + |B|$. With the exact same reasoning
 $P(A \vee B) \leq P(A) + P(B)$ will hold in general.
 
 A random variable, often denoted $X$, is a variable that can be
-diffrent values according to some distribution.
-A RV is defined differently for discrete and continous case.
+different values according to some distribution.
+A RV is defined differently for discrete and continuous case.
 Discrete $X$ is associated with the \emph{probability function} f
-such that $P(X = a) = f(a)$. When $X$ is contious we call f a
+such that $P(X = a) = f(a)$. When $X$ is continuous we call f a
 \emph{density function} and it should then obey $f(a) = 0$ yet
 $P(a < X < b) = \int_a^b f(x)dx$.
 
-In the discrete case $E[X] = \sum_x f(x)x$, and as always the continous
-counterpart has an integral instead of a sum. If sampling $X$ alot,
+In the discrete case $E[X] = \sum_x f(x)x$, and as always the continuous
+counterpart has an integral instead of a sum. If sampling $X$ a lot,
 spawning $X_1, X_2, ...$ then $E[X]$ is the average of those values.
 
 Intuitively $Z = X + Y$ means that $Z$ is $z = x + y$ when
@@ -174,8 +174,8 @@ Yes for both 3.6 and 3.7. $ E[X+Y] = \sum_x \sum_y f_X(x)f_Y(y)(x+y) $
 Is "assumed" from the
 intuition I gave about $Z = X + Y$, and can also be derived from
 the definition I gave.
-I've attached proofs for both 3.6 and 3.7, the proofs are for
-the discrete case, but will likely be analogous in the continous case.
+I have attached proofs for both 3.6 and 3.7, the proofs are for
+the discrete case, but will likely be analogous in the continuous case.
 
 \begin{align*}
  E[X+Y] &= \sum_x \sum_y f_X(x)f_Y(y)(x+y) \\
@@ -192,8 +192,13 @@ the discrete case, but will likely be analogous in the continous case.
 
 After looking for validation on public sources, I realize my definition
 of $f_Z(z)$ have assumed that $X$ and $Y$ are independent. 
-But I don't know any better way to define $Z$. As a consequence of
-the definition one can state (under the wrong definition)
-proof $E[X*Y] = E[Y] * E[X]$.
+But I don't know any general way to define $Z$. As a consequence of
+the definition one can (under the wrong definition)
+prove $E[XY] = E[Y]  E[X]$. That is, that only holds when $X$ and $Y$
+are independent. It's easy to see that if $X = Y$ then $E[XY] = E[Y]  E[X]$
+does not need to hold. If $f(0) = 99\%$ and $f(1) = 1\%$, then
+$E[X] = E[Y] = 0.01$. Since $X = Y$ and $1*1=1$, then $E[XY] = 0.01$ as well,
+and not $E[X]E[Y]=0.0001$.
+
 
 \end{document}
