@@ -79,10 +79,11 @@ we show that Set Cover reduces to our problem.
 
 \subsection{in NP?}
 
-We will show that given a proposed solution $F \subseteq E$
-to my problem, I should be able verify that it
-solves the problem (not neccesarily optimally),
+We will show that any proposed solution $F \subseteq E$
+can in polynomial time checked if it solves the problem
+(not neccesarily optimally),
 that is all terminal nodes are reachable only using the $F$ edges.
+If we can contruct such algorithm, the problem is in NP
 
 \textbf{Algorithm:} Make a dfs-search from the root $r$ in the graph
 $G' = (V, F)$. $F$ is a solution iff every node in $T$
@@ -101,7 +102,7 @@ Here we mean the \emph{unweighted} Set Cover problem. Let the set
 $A$ denote the set of choosen sets for the Set Cover problem,
 then the union of all elements in $A$ is $U$.
 Also all edges are two-way, that is when I write edge $(a, b)$ i mean
-${a, b}$ edge.
+$\{a, b\}$ edge.
 
 We reduce the Set Cover instance $d = (U, S_1..S_m) \in D$ to an instance
 of our problem $c = (G, T, r) \in C$. This instance to instance transformation is
@@ -116,7 +117,7 @@ convince that the solutions
 are mapping to each-other.
 
 An edge from an element node $x$ will only be added
-to $F$ if it will be part of $x$'s path to $r$. 
+to $F$ if it will be part of $x$'s path to $r$.
 Also, if we have dedicated an edge from $x$ to $i$ (denoted $x \to i$).
 We will always add the edge of $i$ (= $x \to i$ ) to $F$,
 as that edge leads immedietly to $r$ with only one edge.
@@ -135,7 +136,7 @@ that any element $x$
 picks which set $x \in S_i$ it is covered by, and we return
 $A$ to be the union of picked sets. Now if we
 imagine that these elements collaborate to pick their $S_i$
-to minimize $A$. Then the set cover is optimally satisfied.
+to minimize $A$. Then the set cover is \emph{optimally satisfied}.
 It's satisfied since every element have picked
 a coverer, and optimally as $A$ is minimized.
 
@@ -152,7 +153,8 @@ assigned to first $i$ that have it's edge taken.
 (such $i$ always exists)
 
 Constructing instance $d$ from $c$ is polynomial,
-and so if we can solve any $c \in C$ polynomially, we can do
-for any $d \in D$ as well. We have reduced $D$ to $C$. Done.
+and if we can solve any $c \in C$ polynomially, we can solve
+any $d \in D$ polynomially as well. We have reduced $D$ to $C$.
+Hence the problem is NP-Complete. Done.
 
 \end{document}
