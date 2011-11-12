@@ -22,8 +22,101 @@
 
 \section{Bigamical Matching}
 
+Recall the standard flow-solution to bipartite matching.
+By making a minor edit to that, we can get it to solve for our problem.
+I will first shortly recall the standard solution, then I will
+clarify how our problem \emph{and} solution differs.
+Lastly I will motivate why that solution solves for our modified version.
+
+In the standard problem we have that each $X$ matches to at most $1$ $Y$.
+The solution then is to create graph with a source node $s$ and
+sink node $t$. Then connect edges $s \to x$ and $y \to t$. Also
+we add the edges from $E$, that is $x \to y$ $(x,y) \in E$,
+this time the edges are directed. All edges in this constructed graph
+has capacity $1$.
+If we solve for maximum flow in this graph, we will get an optimal
+solution. $x$ matches to $y$ iff $f_{(x,y)} = 1$.
+
+But the problem statement is that $X$ can match to at most $2$ $Y$.
+I claim that to accomodate for this difference, the only modification
+is to give capacity $2$ for the $s \to x$ edges.
+We still have the exact same interpretation for $f_{(x,y)} = 1$.
+
+Motivation: $0 \leq f_{(s, x)} \leq 2$ and $0 \leq f_{(y, t)} \leq 1$
+represents number of matches $x$ and $y$ has respectively,
+this matches the problem. $0 \leq f_{(x, y)} \leq 1$ is indeed
+a "boolean" for if $x$ matches to $y$. For example for a fixed
+$x$, if $f_{(s, x)} = 2$, the rule of \emph{flow conservation}
+forces for $x$ to match to two different $y_1$ and $y_2$.
+$y_1 \neq y_2$ because that otherwise would contradictory imply
+$f_{(x, y_1)} = 2 \leq 1$. Flow conservation
+at all node types have a semantic in the problem desrciption.
+We just looked at node type $x$. Similar simple analysis
+can be done for $s$, any $y$, and $t$ nodes as well,
+but we ommit that.
+
+Since this is only a flow problem, this can be solved
+in polynomial time.
+
 \section{Dominos on a grid-set}
 
-\section{Edge-disjoint connectivity}
+This is also matching! But between which two "genders"?
+We will partition $Q$ into $X,Y \subset Q$.
+If we paint the squares on $Q$ like a chess board, then we let
+$X$ be the white and $Y$ be the black squares.
+The intuition here is that if you put a domino brick on a chess board
+it will cover one white and one black square. So if a brick covers
+$q_1,q_2 \in Q$, we know that we can write it as
+$x=q_1 \in X$ and $y=q_2 \in Y$.
+
+One should now recall the problem's
+constraints on brick placement, "two adjacent squares" means one
+square is black the other white. "must not overlap" will mean that
+we can actually see this as a matching problem, $x$ and $y$ are
+matched if they share the same domino brick. In the original
+marriage problem a person (male or female) can't marry twice,
+here a square (black or white) can't have two domino bricks covering it.
+
+So, we algorithm-wise we use maximum flow time time aswell.
+We construct the graph
+$G = (X, Y, \{(x,y) | x \in X, y \in Y, adjacent(x, y)\)$
+and solve the matching problem. We put a domino on square $x$ and $y$
+if $f_{(x,y)} = 1$. We have many times discussed how bipartite
+matching is solved, both in class and in the previous problem.
+
+This can run in $O(V^2)$ time, an augmenting path can be found in
+$O(E)=O(V)$ and each found path increases flow by $1$, that increment
+won't be found more than $V$ times as that would "overflow".
+Hopcroft-Karp algorithm for bipartite matching even gives
+running time of $O(V^1.5)$.
+
+\section{Multi-source/sink Edge-disjoint connectivity}
+
+We are given $G = (V, E)$, we have some sources $s_1,..,s_k \in V$
+and sinks $t_1,..,t_k \in V$. We can solve the problem with maximum
+flow. We will construct a flow-graph $G'$ from $G$ and after calculating
+the flow in $G'$ we will contruct paths by following flows.
+Lets now look at it a bit more in detail.
+
+Construct the graph $G' = (V \cup {S, T}, E \cup E')$.
+So $S$ and $T$ are new nodes, the \emph{real} source and sink.
+$S$ will provide $s_1..s_k$ with flow.
+Looking at $G$, the small sources will have their own
+production, while in reality it comes from $S$. $T$ will
+in the same sense be a supersink for $t_1..t_k$.
+For $S$ and $T$ to really be what I just described we
+set $E' = {(S, s_i) | i=1..k} \cup {(t_i, T) | i=1..k}$.
+We set that all edges have the capacity $1$.
+
+The maximum flow $m$ from this network will be the number
+of paths we can construct. If $m=k$ then we indeed can
+find $k$ paths, each path going from $s_i$ to $t_j$.
+Since the problem was to find the actual paths and not
+any maximize $m$ problem, we consider $m=k$ and
+will give an algorithm for finding the paths given the
+flow.
+
+Let us say path $i$ is the path starting from $s_i$.
+
 
 \end{document}
