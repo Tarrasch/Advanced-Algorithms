@@ -162,43 +162,31 @@ In the discrete case $E[X] = \sum_x f(x)x$, and as always the continuous
 counterpart has an integral instead of a sum. If sampling $X$ a lot,
 spawning $X_1, X_2, ...$ then $E[X]$ is the average of those values.
 
-Intuitively $Z = X + Y$ means that $Z$ is $z = x + y$ when
-$X$ is $x$ and $Y$ is $y$. Trying to give a definition, I end up 
-with "looping" over $X$.
-$f_Z(z) = \sum_x f_X(x)f_Y(z-x)$. This says that $P(Z=z)$ is
-$\sum P(X=x \wedge Y=y)$ for all $x$ and $y$ such that $z = x + y$.
-$Z = X * Y$ is fundamentally the same, then
-$f_Z(z) = \sum_x f_X(x)f_Y(z/x)$
+Before describing $Z = X + Y$, let's redefine a RV. $X : \Omega \to R$
+is a RV, so $X(\omega) = r$. $P(X = r) = \sum_{X(\omega)=r} P(\omega)$.
+Finally we can easily denote $Z(w) = (X + Y)(w) = X(w) + Y(w)$
+($w$ looks like $\omega$ but easier to write),
+that is the definition of
+addition. Multiplication is analogous.
+Before contuing, we might also want to note that
+$E[X] = \sum_x P(X = x)*x  = \sum_w P(w)*X(w)$.
 
-Yes for both 3.6 and 3.7. $ E[X+Y] = \sum_x \sum_y f_X(x)f_Y(y)(x+y) $
-Is "assumed" from the
-intuition I gave about $Z = X + Y$, and can also be derived from
-the definition I gave.
+Yes for both 3.6 and 3.7. But 3.7 only holds for independent variables.
 I have attached proofs for both 3.6 and 3.7, the proofs are for
 the discrete case, but will likely be analogous in the continuous case.
 
 \begin{align*}
- E[X+Y] &= \sum_x \sum_y f_X(x)f_Y(y)(x+y) \\
-        &= \sum_x f_X(x) \sum_y f_Y(y)y + \sum_y f_Y(y) \sum_x f_X(x)x \\
-        &= E[Y]\sum_x f_X(x) + E[X]\sum_x f_X(x) \\
+ E[X+Y] &= \sum_w P(w)*(X+Y)(w) \\
+        &= \text{\{split the sums\}} \\
         &= E[Y] + E[X]\\
 \\
 \\
- E[X*Y] &= \sum_x \sum_y f_X(x)f_Y(y)(x*y) \\
+ E[X*Y] &= \sum_x \sum_y P(X = x \wedge Y = y)(x*y) \\
+        &= \text{\{independence\}} \\
+        &= \sum_x \sum_y f_X(x)f_Y(y)(x*y) \\
         &= \sum_x f_X(x)x \sum_y f_Y(y)y \\
         &= E[Y]\sum_x f_X(x)x \\
         &= E[Y] * E[X]
 \end{align*}
-
-After looking for validation on public sources, I realize my definition
-of $f_Z(z)$ have assumed that $X$ and $Y$ are independent. 
-But I don't know any general way to define $Z$. As a consequence of
-the definition one can (under the wrong definition)
-prove $E[XY] = E[Y]  E[X]$. That is, that only holds when $X$ and $Y$
-are independent. It's easy to see that if $X = Y$ then $E[XY] = E[Y]  E[X]$
-does not need to hold. If $f(0) = 99\%$ and $f(1) = 1\%$, then
-$E[X] = E[Y] = 0.01$. Since $X = Y$ and $1*1=1$, then $E[XY] = 0.01$ as well,
-and not $E[X]E[Y]=0.0001$.
-
 
 \end{document}
