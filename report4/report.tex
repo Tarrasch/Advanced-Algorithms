@@ -1,0 +1,69 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{pdfpages}
+
+\title{Advanced Algorithms - part 4 (exc 10-11)}
+\author{Arash Rouhani (rarash@student.chalmers.se) - 901117-1213}
+
+\begin{document}
+
+\maketitle
+
+\section{Finding $x$ in an unsorted array}
+
+10.1: Definetly $n$ steps are required in the worst case.
+Any algorithm must check all $n$ elements in a \emph{deterministic} order.
+So if $i$ is the last element an Algorithm looks for, and $x$ is at position
+$i$, then the $n$th step will find $x$.
+
+Here we assumed any algorithm never checks the same element and eventually
+checks every index.
+
+10.2: Lets create a random variable $X$ denoting number of steps
+required to find $x$. Let $X_i$ be a RV so that $X_i = 1$
+when step $i$ finds $x$ and $X_i = 0$ otherwise.
+
+
+
+10.3: We concluded we need $n/2$ steps in average with the
+non-repetition algroithm. What about the one with repetitions?
+Well, of course the probability of finding $x$ at any step is
+$p = 1/n$. We ask ourselves how many attempts in average must
+be done until success. This is a general question and has a
+text-book answer: $1/p = n$. So the repetition algorithm
+requires twice as many steps in average and has no
+uppper bound guarantee.
+
+Of course avoiding repetitions is better, and we showed
+it to require half as many steps. But a non-repeating
+algorithm is more difficult to implement and must do bookkeeping
+of checked elements.
+
+\section{Satisfying many clauses revisited}
+
+11.1: Naturally the problem is easier if the clause sizes
+are reduced to 2 (2-SAT) or even 1, if it were reduced to 1
+then the problem would be no problem!
+However, the randomized algorithm is performing well
+because the clause sizes \emph{are} big! Specifically, it uses
+the fact that in average the probability of a clause
+being true is $7/8$. If clause sizes was 1 that
+probability is reduced to $1/2$. So it performs worse
+if clauses can be of size 2 and 1.
+
+11.2:
+
+In summary, big clauses will likely be satisfied with
+randomly assigned literals.
+
+
+
+\end{document}
