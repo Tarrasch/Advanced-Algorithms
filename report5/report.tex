@@ -1,0 +1,69 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{pdfpages}
+
+\title{Advanced Algorithms - part 5 (exc 12-13)}
+\author{Arash Rouhani (rarash@student.chalmers.se) - 901117-1213}
+
+\begin{document}
+
+\maketitle
+
+\section{"eat one's cake and have it too" combined algorithm}
+
+I propose an algorithm that runs both the algorithms in parallel,
+and returns the answer as soon as any algorithm terminates.
+We assign different priorities to the algorithms depending on
+the parameter $s$.
+
+The first objection might be \emph{why paralell}? Why not just
+one of them? Will it not always be faster to just pick one of them?
+Yes! But we don't know which one as of the uncertainty introduced
+by the randomized algorithm.
+Our randomized algorithm
+doesn't have a predictable end, if we run the randomized algorithm
+on it's own we get no $O(g(n))$ bound. Running only the deterministic
+algorithm will not have expected time $s*f(n)$.
+
+So we need both algorithms and also in parallel.
+But how do we ensure expected time $s*f(n)$, well
+that we obviously get if the "thread" running the randomized
+algorithm would have a slowdown of $s$, that is it get
+$1/s$ of the attention in the parallel execution.
+From this we get that the deterministic "thread" get
+$1-1/s$ attention. Here we have assumed
+perfect parallelism.
+
+Ok, can we show this new algorithm both is $O(g(n))$ time and
+$s*f(n)$ expected running time? As for the expected running time
+we know it is fulfilled as we choose the $1/s$ factor for
+the randomized algorithm just for this reason. Note that if
+we have insanely chosen $s$ to be large we evetually
+get the purpose-defeating inequaity $s*f(n) > g(n)$.
+In that case the expected running time would be $g(n)$ or better.
+As for if the algorithm is $O(g(n))$. Yes, as the running
+time in the worst case is when the deterministic algorithm terminates
+before the randomized, yielding running time of
+
+\[
+\frac{1}{1-1/s}g(n) = c(s)*g(n) \in O(g(n))
+\]
+
+Since $c(s)$ is a constant with respect to $n$ the whole
+algorithm is $O(g(n))$.
+
+\section{Family of colorings}
+
+\textbf{13.1:}
+\textbf{13.2:}
+\textbf{13.3:}
+
+\end{document}
