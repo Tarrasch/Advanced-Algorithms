@@ -19,7 +19,7 @@
 
 \section{Finding $x$ in an unsorted array}
 
-10.1: Definetly $n$ steps are required in the worst case.
+\textbf{10.1:} Definetly $n$ steps are required in the worst case.
 Any algorithm must check all $n$ elements in a \emph{deterministic} order.
 So if $i$ is the last element an Algorithm looks for, and $x$ is at position
 $i$, then the $n$th step will find $x$.
@@ -27,19 +27,41 @@ $i$, then the $n$th step will find $x$.
 Here we assumed any algorithm never checks the same element and eventually
 checks every index.
 
-10.2: Lets create a random variable $X$ denoting number of steps
-required to find $x$. Let $X_i$ be a RV so that $X_i = 1$
-when step $i$ finds $x$ and $X_i = 0$ otherwise.
+\textbf{10.2:} Lets create a random variable $X$ denoting number of steps
+required to find $x$. Let $X_i$ be a RV so that $X_i = i$
+when we at step $i$ finds $x$, $X_i = 0$ otherwise.
+It's easy to see that $X = \sum_i X_i$.
+Lets solve for $E[X_i]=i*P($we find element at step $i)$:
 
+In order to find $x$ in step $i$, we \emph{must} first avoid finding
+$x$ in previous steps, and then we must find it at step $i$.
+The product of these probabilities is the probability for the whole
+event of finding $x$ in step $i$ to happen.
 
+\[
+\frac{n-1}{n}\dots\frac{n-1-(i-1)}{n-(i-1)}*\frac{1}{n-i} = 1/n
+\]
 
-10.3: We concluded we need $n/2$ steps in average with the
-non-repetition algroithm. What about the one with repetitions?
+Remark: The sanity-check that the sum of those probabilities
+for all $i$ is $1$ holds: $n*(1/n) = 1$.
+
+So in conclusion $E[X_i]= i/n$. Now we can solve for $E[X]$,
+by \emph{linearity of expectation} this is
+
+\[
+E[X] = \sum_{1 \leq i \leq n} i/n
+     = \frac{n(n+1)}{2}\frac{1}{n}
+     = \frac{n+1}{2}
+\]
+
+\textbf{10.3:} We concluded we need $(n+1)/2$ steps in average with the
+non-repetition algroithm. What about with repetitions?
 Well, of course the probability of finding $x$ at any step is
 $p = 1/n$. We ask ourselves how many attempts in average must
-be done until success. This is a general question and has a
-text-book answer: $1/p = n$. So the repetition algorithm
-requires twice as many steps in average and has no
+be done until success. This is a general question when $p$ is known
+and has the
+text-book answer $1/p = n$. So the repetition algorithm
+requires alomost twice as many steps in average and has no
 uppper bound guarantee.
 
 Of course avoiding repetitions is better, and we showed
@@ -49,21 +71,59 @@ of checked elements.
 
 \section{Satisfying many clauses revisited}
 
-11.1: Naturally the problem is easier if the clause sizes
-are reduced to 2 (2-SAT) or even 1, if it were reduced to 1
+Note about notation: I took inspiration from the lecture notes,
+in the notes
+$k$ is the number of clauses, we will use that notation.
+The number of literals in
+each clause instead will be $l$. So 11.1 asks
+when $l \leq 3$ and 11.2 asks when $l$ is arbitrary.
+
+\textbf{11.1:} Naturally the problem is easier if the clause sizes
+are reduced to $2$ (2-SAT) or even $1$, if it were reduced to $1$
 then the problem would be no problem!
 However, the randomized algorithm is performing well
 because the clause sizes \emph{are} big! Specifically, it uses
 the fact that in average the probability of a clause
-being true is $7/8$. If clause sizes was 1 that
-probability is reduced to $1/2$. So it performs worse
-if clauses can be of size 2 and 1.
+being true is $7/8$ when $l=3$. But for $l=1$
+the probability is reduced to $1/2$. So we
+can't expect that a random assignment in this setting will
+be able to satisfy as many clauses
+if clauses can be of size $2$ and $1$.
 
-11.2:
+It is not obvious what the iterating algorithm would do in this
+setting with varying clause-sizes.
+We cant try random assignments until we have satisfied $k*7/8$
+of the clauses, since such a solution might not exist and the
+algorithm would never terminate!
+We showed the existence of such a solution in class using
+the \emph{Probabilistic Method}. But now that clauses can be
+of size $1$ and $2$, we have $E[X_i] \leq 7/8$ which
+means $P(X \geq k*7/8) > 0$ does not need to hold anymore
+($E[X]$ was $k*7/8$ in class).
+Here $X_i$ is defined as $1$ if clause $i$ is satisfied.
+$X$ is defined as $\sum_i X_i$.
 
-In summary, big clauses will likely be satisfied with
-randomly assigned literals.
+In the lack of an algorithm it is not possible to say
+anything about it.
 
+\textbf{11.2:} Peeking at the lecture notes, we just modify the
+conclusions to be general ($8 \to 2^l$). We see that
+for an arbitrary $l$,
+we expect that the best out of $2^l*k$ assignments will
+have satisfied $\frac{2^l-1}{2^l}k$ clauses.
 
+Big clauses will more likely be satisfied with
+randomly assigned literals. So we get a more maximized
+answer with many literals per clause. The bad news is
+that for every extra literal per clause, we expect twice
+the number of iterations of the algorithms before we get
+a satisfactory result.
+
+At first I was very happy to see that one could just
+higher $l$ and get a exponentially improving result,
+but on the other hand the expected number of iterations
+will also increase exponentially. One must also
+be mindful of that $l$ is not something we choose,
+it is part of the problem.
 
 \end{document}
