@@ -63,7 +63,68 @@ algorithm is $O(g(n))$.
 \section{Family of colorings}
 
 \textbf{13.1:}
-\textbf{13.2:}
-\textbf{13.3:}
+\textbf{13.2:} Yes, we can use it but is it good?
+First I will say \emph{how} and then I will compare the
+algorithm to say if it is good compared to other.
+
+Recall from the lecture notes of the last lecture that
+if we were looking for a path with cardinality $k$,
+and that if we had a coloring that would colorfully
+paint a $k$-length-path $P$, we have a $O(2^kn^2)$ DP-algorithm
+that would find $P$.
+\textbf{Algorithm:} For each
+coloring $f \in F$, run the DP-algorithm with
+with $f$, eventually we will find a solution.\textbf{End.}
+Any node subset $S$ of cardinality $k$
+have at least one coloring $f \in F$ that paints $S$ colorfully,
+since the optimal path $P$ consists of the nodes for some subset $S$,
+that path will thus be checked by the DP-algorithm. The analysis
+is trivial, time complexity is
+$O(ke^klog(n))*O(2^kn^2) = O(k(2k)^kn^2log(n))$ in worst case.
+Worst case is that the last coloring $f$ we check is the
+one that yields a colorful coloring for $S$, where $S$ is the
+nodes in the path $P$ of length $k$, and we only have one such path.
+
+How does this compare to the algorithm in class?
+Time complexity was $O((2e)^kn^2)$ estimated time,
+it did not have the two additional factors $k$ and $log n$.
+So, is it faster than the "family algorithm" presentend above?
+Yes, but the randomized algorithm presented in class gives no
+worst case bound, only an estimated time, and in fact it will
+after a while return that no solution exists if it doesn't find
+one. For some applications that is unacceptable, that is when
+you need $100\%$ certainty wheter if a solution exists or not.
+On the other hand you are often satisfied with a faster and
+very likely to succeed algorithm.
+
+In conclusion, $F$ can be used to solve the problem.
+The algorithm has a worst case bound and is good for some
+applications. However most often you are better of with
+the randomized algorithm from class which is slightly faster,
+but can not guarantee that it will find a solution.
+
+Note: If you are \emph{really} going for the gold, you
+can get the best from both worlds by applying the solution
+from Excercise 12.
+
+\textbf{13.3:} Imagine we have created a hash table,
+at the time of creation we knew which $k$ elements
+that are "insertable". So this hash table can not insert
+other elements than the $k$ pre-defined elements.
+These $k$ elements can be any subset $S$ from a larger pool
+with $n$ elements. From the family $F$ we extract the function
+$f : ElementSet \to ColorSet$ that satisfies $k=|S|=|f(S)|$.
+In words, we pick the coloring
+from $F$ that paints $S$ uniquely, we call that coloring $f$.
+We know such function $f$ exists as of the definition of $F$.
+
+The hashing scheme is simply to use a restrictned
+version of $f$ which we can call $h$. $h : S \to ColorSet$
+and $h(e) = f(e)$. $h$ will for any of the $k$ elements
+give a unique color/memcell, thus being an ideal hash
+function for the set $S$.
+
+In conclusion, yes we can get a has scheme by extracting
+$f \in F$ which yields a hasing function $h$.
 
 \end{document}
