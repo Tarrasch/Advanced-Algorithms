@@ -42,12 +42,12 @@ From this we get that the deterministic "thread" get
 $1-1/s$ attention. Here we have assumed
 perfect parallelism.
 
-Ok, can we show this new algorithm both is $O(g(n))$ time and
+Ok, can we show that this new algorithm both is $O(g(n))$ time and
 $s*f(n)$ expected running time? As for the expected running time
-we know it is fulfilled as we choose the $1/s$ factor for
+we know it is $s*f(n)$ as we choose the $1/s$ factor for
 the randomized algorithm just for this reason. Note that if
 we have insanely chosen $s$ to be large we evetually
-get the purpose-defeating inequaity $s*f(n) > g(n)$.
+get the purpose-defeating inequality $s*f(n) > g(n)$.
 In that case the expected running time would be $g(n)$ or better.
 As for if the algorithm is $O(g(n))$. Yes, as the running
 time in the worst case is when the deterministic algorithm terminates
@@ -57,7 +57,7 @@ before the randomized, yielding running time of
 \frac{1}{1-1/s}g(n) = c(s)*g(n) \in O(g(n))
 \]
 
-Since $c(s)$ is a constant with respect to $n$ the whole
+Since $c(s)$ is a constant with respect to $n$ the
 algorithm is $O(g(n))$.
 
 \section{Family of colorings}
