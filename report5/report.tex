@@ -171,6 +171,38 @@ and $h(e) = f(e)$. $h$ will for any of the $k$ elements
 give a unique color/memcell, thus being an ideal hash
 function for the set $S$.
 
+About the common operations \emph{insertion, deletion}
+and \emph{look up}. Given the fact we know which $k$ unique elements
+that can interact with our hash table,
+we could let the hash table simply
+be a $k$ length bitstring $b = b_1 b_2 \dots b_k$ where
+$b_i = 1$ iff element $e \in S$ is in the hash table
+and $i = h(e)$.
+\textbf{Correctness of representation:}  Since we have only $k$ elements
+this bitstring can cover the presence of all those elements.
+There are no duplicates and their associated color is unique,
+so there can never be more than
+one element at cell $i$ in the hash table. So
+a binary number representing presence or non-presence
+is therfor enough.
+ \textbf{End.}
+With this representation we can define the three operations.
+
+\[
+insert(e) \to b_{h(e)} := 1
+\]
+\[
+delete(e) \to b_{h(e)} := 0
+\]
+\[
+lookup(e) \to b_{h(e)} == 1
+\]
+
+One good property of these functions that even if $h$
+is bijective and has an inverse, it's not neccesary
+to use it to implement the operations.
+
+
 In conclusion, yes we can get a has scheme by extracting
 $f \in F$ which yields a hasing function $h$.
 
